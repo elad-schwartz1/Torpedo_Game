@@ -1,0 +1,60 @@
+==================
+=  Description:
+==================
+In this exercise I have created an interactive game called 'asteroids'. The aim of the game is to use the
+ship provided to shoot torpedos at the asteroids flying around 2d space and destroy them. Large asteroids can
+be broken up into smaller ones, and only asteroids of size one will be completely eliminated. If the players
+ship collides with an asteroid a warning message will appear together with the loss of a player life. If a player
+loses 3 lives the game will end and the player will lose. The game can be won by destroying all of the asteroids
+or alternatively can be ended by pressing the 'q' key (which will quit the game). The game uses OOP to combine
+several object classes. The main game operating class runs the game loop until one of possible exit scenarios
+occurs.
+While writing this program I had to make several programming decisions about the set up of the code. The following
+are three such decisions together with their explanations:
+
+1) Torpedo limit: The limit of the number of each type of torpedo has (in our code) been set in the game class.
+                 Alternatively I could have decided to set the limit in the torpedo class. An advantage to this
+                 would be that since all torpedos are shot by the ship anyway, the limit will always be an object
+                 used by the ship. Moving the limit to inside the ship would improve the stability of the code and
+                 make it harder to accidentally alter the limit.
+                 I chose to make it part of the game class as it improves the adaptability of our code and makes
+                 the game for versatile and easier to change (for example to set a higher or loIr limit to alter
+                 game difficulty).
+
+2)Saving of game variables: Throughout the game, objects that are created and destroyed (torpedos, asteroids)
+                            are saved in lists inside game class. I could instead have created a separate 'Objects'
+                            class to hold all of these variables. The advantage of this would be improved user
+                            readability and ability to more easily alter the number and type of objects in the board.
+                            I have chosen instead to save them as lists. The game is a fast paced one and since many
+                            of the objects that are created have  very short life spans (or are destroyed quickly)
+                            saving them as lists inside an existing class required less memory space than creating a
+                            separate class.
+
+3) Speed match of special torpedo: The behaviour of the special torpedo can either be 'track' mode or 'speed_match'
+                                   mode. Speed match occurs when the torpedo it trailing an asteroid and needs to
+                                   increase speed dramatically in order to catch the asteroid it is chasing. This
+                                   parameter is saved as a parameter in the special torpedo (as either True or False).
+                                   Alternatively I could have chosen to make this part of the game class. An advantage
+                                   to this would have been code readability (since reader could see exactly when
+                                   asteroids behaviour changes). I chose to place the parameter inside the
+                                   special_torp class in order to ensure that once the parameter is switched, the
+                                   torpedo will continue to move in 'speed match' speed and direction (without any
+                                   chance of it being  altered in one of the game loops)until it either runs out of
+                                   life or hits an asteroid.
+
+======================
+= Special comments  =
+======================
+special_torp file contains Special Torpedo class:
+I have chosen to add a new 'Special_Torpedo' class to the game. Special torpedos can be initialised in the
+game by pressing the 's' key. They are used to destroy asteroids and do this by tracking down and following
+the closest asteroid to the ship at the time of fire. Their constructors are the same as normal torpedo
+constructors except that they also include a speed_match parameter that is either switched on or off.
+The special torpedos are the most effective when fired from behind the asteroid as they will align themselves
+with the path of the asteroid and then speed in order to initiate a collision. Collision is not guaranteed
+but is easier than trying to aim and shoot regular torpedos.
+Tracking torpedos have proven difficult to program, given more time I would suggest the following improvements:
+1) Adding 'track' function would increase the number of position cases that could be handled, each case
+requires a slightly different torpedo behaviour.
+2) Due to heavy computational demand I had to decrease alignment accuracy to 1 decimal point, meaning that
+torpedos often miss their targets by a small margin.
